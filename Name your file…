@@ -1,0 +1,83 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+bool uniqueChar_bitflag(char *str) {
+	int flag = 0;
+	int len = strlen(str);
+	int i;
+
+	for (i=0; i<len; i++) {
+		if (!(flag & (1<< (str[i]-'a')))) {
+			flag |= 1<< (str[i]-'a');
+		}
+		else {
+			printf("char %c is not unique\n", str[i]);
+			return false;
+		}
+	}
+
+	return true;
+}
+
+bool uniqueChar_flag(char *str) {
+	bool flag[256];
+	int len = strlen(str);
+	int i;
+
+	for (i=0; i<256; i++) {
+		flag[i] = false;
+	}
+
+
+	for (i=0; i<len; i++) {
+		if (!flag[str[i]-'0']) {
+			flag[str[i]-'0'] = true;
+		}
+		else {
+			printf("char %c is not unique\n", str[i]);
+			return false;
+		}
+	}
+
+	return true;
+}
+
+bool uniqueChar_bruteForce(char *str) {
+	int len = strlen(str);
+	int i, j;
+
+	for (i=0; i<len-1; i++) {
+		for (j=i+1; j<len; j++) {
+			if (str[j]==str[i]) {
+				printf("char %c is not unique\n", str[i]);
+				return false;
+			}
+		}
+	}
+
+	return true;
+}
+
+int main(){
+
+	char str[100];
+
+	strcpy(str, "abcdefghijklmnopq");
+	if (uniqueChar_bruteForce(str)) 
+		printf("brute force: every char in string %s is unique\n", str);
+	else
+		printf("brute force: Not every char in string %s is unique\n", str);
+
+	if (uniqueChar_flag(str)) 
+		printf("bool array: every char in string %s is unique\n", str);
+	else
+		printf("bool array: Not every char in string %s is unique\n", str);
+
+	if (uniqueChar_bitflag(str)) 
+		printf("bit flag: every char in string %s is unique\n", str);
+	else
+		printf("bit flag: Not every char in string %s is unique\n", str);
+
+	return 0;
+}
