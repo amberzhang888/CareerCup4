@@ -16,7 +16,6 @@ bool uniqueChar_bitflag(char *str) {
 			return false;
 		}
 	}
-
 	return true;
 }
 
